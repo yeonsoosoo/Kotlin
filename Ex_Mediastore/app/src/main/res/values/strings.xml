@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Ex_Mediastore</string>
+
+    <string name="alert_btn_cancel">취소</string>
+    <string name="app_setting">설정</string>
+    <string name="message_camera_external_read_permission">카메라를 사용하기 위해서 권한 승인이 필요합니다.\n\n이 기능을 사용하려면 아래의 설정에서 카메라와 저장소 항목을 활성화하세요.</string>
 </resources>
