@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pys.ex_mediastore">
 
+    <uses-permission android:name="android.permission.CAMERA"/> <!--camera-->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/> <!--Read Image-->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
