@@ -8,10 +8,9 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
 import com.pys.ex_mediastore.databinding.ActivityMainBinding
 import java.io.File
 import java.io.IOException
@@ -21,6 +20,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     val REQUEST_PERMISSION_CAMERA_STORAGE = 201
+    private val REQUEST_CAMERA_IMG_UPLOAD = 1002 //카메라 촬영 이미지 업로드
+
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mFile: File
@@ -32,8 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-
-        val resolver = applicationContext.contentResolver //MediaStore
 
         mBinding.btnCamera.setOnClickListener {
             takePhoto()
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         val fileName = "camera_$currentDate"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
-        var file: File? = null
+        var file: File?
         try {
             file = File.createTempFile(
                 fileName,
@@ -70,18 +69,9 @@ class MainActivity : AppCompatActivity() {
 
         // 카메라 intent 포함
         if (CommonUtil.checkPermission(this, REQUEST_PERMISSION_CAMERA_STORAGE)) {
-            startCameraResult.launch(intentCamera)
+            startActivityForResult(intentCamera, REQUEST_CAMERA_IMG_UPLOAD)
         }
     }
-
-    private val startCameraResult: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                Log.d("카메라 연동", " 성공")
-            }
-        }
-
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -96,6 +86,19 @@ class MainActivity : AppCompatActivity() {
 
             } else {
                 CommonUtil.showMoveSettingDialog(this, R.string.message_camera_external_read_permission)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CAMERA_IMG_UPLOAD) {
+            try {
+                val file = File(mFile.toString())
+                Log.d("pys path : ", file.path)
+                Glide.with(this).load(file.path).into(mBinding.imageView)
+            } catch (e : Exception) {
+                e.printStackTrace()
             }
         }
     }
