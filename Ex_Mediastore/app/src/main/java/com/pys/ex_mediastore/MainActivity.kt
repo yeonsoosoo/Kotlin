@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     val REQUEST_PERMISSION_CAMERA_STORAGE = 201
     private val REQUEST_CAMERA_IMG_UPLOAD = 1002 //카메라 촬영 이미지 업로드
+    private val REQUEST_CODE_ACTION_IMAGE_CROP = 102
 
 
     private lateinit var mBinding: ActivityMainBinding
@@ -94,12 +95,14 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == REQUEST_CAMERA_IMG_UPLOAD) {
             try {
-                val file = File(mFile.toString())
-                Log.d("pys path : ", file.path)
-                Glide.with(this).load(file.path).into(mBinding.imageView)
+                IntentUtil.startActionCropImage(this, cameraImageUri, mFile.path, false, REQUEST_CODE_ACTION_IMAGE_CROP)
+
             } catch (e : Exception) {
                 e.printStackTrace()
             }
+        } else if(requestCode == REQUEST_CODE_ACTION_IMAGE_CROP) {
+            Log.d("이미지 로드 : ", data?.data?.path.toString())
+            Glide.with(this).load(data?.data).into(mBinding.imageView)
         }
     }
 }
