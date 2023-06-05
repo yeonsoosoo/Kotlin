@@ -2,6 +2,8 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 2022/02 API 레벨 30 상향 후 아래 첫출 추가(이미지 파일 업로드 기능 관련) -->
     <files-path name="files" path="."/>
+    <cache-path name="cache" path="./" />
     <external-cache-path name="external_files" path="."/>
     <external-path name="external_files" path="."/>
+    <external-path name="hidden" path="/Pictures/pic"/>
 </paths>
