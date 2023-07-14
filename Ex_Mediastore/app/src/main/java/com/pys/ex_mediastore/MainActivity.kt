@@ -82,8 +82,8 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == REQUEST_PERMISSION_CAMERA_STORAGE) {
             if(grantResults.size > 1
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                /*&& grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && grantResults[1] == PackageManager.PERMISSION_GRANTED*/) {
 
             } else {
                 CommonUtil.showMoveSettingDialog(this, R.string.message_camera_external_read_permission)
