@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 퍼미션 요청
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
