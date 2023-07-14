@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 
 object CommonUtil {
 
+    // 퍼미션 체크
     fun checkPermission(activity : Activity, requestCode : Int): Boolean {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
